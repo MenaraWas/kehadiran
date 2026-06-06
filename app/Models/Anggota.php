@@ -15,6 +15,7 @@ class Anggota extends Model
         'foto',
         'kategori_pegawai',
         'jabatan',
+        'nrp_nip',
     ];
 
     public function kehadirans(): HasMany

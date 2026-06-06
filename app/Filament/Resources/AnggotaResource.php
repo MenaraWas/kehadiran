@@ -47,6 +47,10 @@ class AnggotaResource extends Resource
                             ->label('Pangkat / Korps / Gol')
                             ->placeholder('Cth: Letkol Ckm (K), Penata Tk.I III/d, PPPK Gol. V')
                             ->maxLength(255),
+                        Forms\Components\TextInput::make('nrp_nip')
+                            ->label('NRP / NIP / NIPPPK / NPPB')
+                            ->placeholder('Nomor induk pegawai')
+                            ->maxLength(50),
                         Forms\Components\FileUpload::make('foto')
                             ->label('Foto Anggota')
                             ->image()
@@ -76,6 +80,11 @@ class AnggotaResource extends Resource
                     ->placeholder('-')
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('nrp_nip')
+                    ->label('NRP / NIP')
+                    ->placeholder('-')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('kategori_pegawai')
                     ->label('Kategori')
                     ->badge()
