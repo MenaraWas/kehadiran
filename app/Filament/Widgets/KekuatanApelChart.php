@@ -7,7 +7,9 @@ use Filament\Widgets\ChartWidget;
 
 class KekuatanApelChart extends ChartWidget
 {
-    protected static ?int $sort = 2;
+    protected static ?int $sort = 5;
+
+    protected static ?string $maxHeight = '280px';
 
     public ?string $filter = 'all';
 
@@ -18,7 +20,7 @@ class KekuatanApelChart extends ChartWidget
             ->first();
 
         if ($latestKegiatan) {
-            return 'Kekuatan Kehadiran Terbaru: ' . $latestKegiatan->nama_kegiatan . ' (' . $latestKegiatan->tanggal->format('d M Y') . ')';
+            return 'Kekuatan Apel: ' . $latestKegiatan->nama_kegiatan . ' (' . $latestKegiatan->tanggal->format('d M Y') . ')';
         }
 
         return 'Kekuatan Kehadiran Terbaru';
@@ -49,7 +51,7 @@ class KekuatanApelChart extends ChartWidget
                         'backgroundColor' => ['#e2e8f0'],
                     ]
                 ],
-                'labels' => ['Belum ada data kegiatan (0 Orang)'],
+                'labels' => ['Belum ada data kegiatan'],
             ];
         }
 
@@ -62,32 +64,18 @@ class KekuatanApelChart extends ChartWidget
 
         $kehadirans = $query->get();
 
-        // Hitung masing-masing status kehadiran
-        $hadir = $kehadirans->where('status', 'Hadir')->count();
-        $belumAbsen = $kehadirans->where('status', 'Belum Absen')->count();
-        $sakit = $kehadirans->where('status', 'Sakit')->count();
-        $izin = $kehadirans->where('status', 'Izin')->count();
-        
-        $dinas = $kehadirans->whereIn('status', ['Dinas Dalam', 'Dinas Sore', 'Dinas Luar', 'Dinas Khusus'])->count();
-        $pelayanan = $kehadirans->where('status', 'Pelayanan Teknis')->count();
-        $cuti = $kehadirans->whereIn('status', ['Cuti Tahunan', 'Cuti Bersalin'])->count();
-        $lepas = $kehadirans->whereIn('status', ['Lepas Libur', 'Lepas Piket', 'Lepas Jaga'])->count();
-        $lainnya = $kehadirans->whereIn('status', ['BP', 'Izin Tidak Apel', 'Terlambat', 'Pendidikan'])->count();
-
-        // Peta data
         $dataMap = [
-            'Hadir' => $hadir,
-            'Belum Diabsen' => $belumAbsen,
-            'Sakit' => $sakit,
-            'Izin' => $izin,
-            'Dinas Resmi' => $dinas,
-            'Pelayanan Teknis' => $pelayanan,
-            'Cuti' => $cuti,
-            'Lepas Tugas' => $lepas,
-            'Lainnya' => $lainnya,
+            'Hadir' => $kehadirans->where('status', 'Hadir')->count(),
+            'Belum Diabsen' => $kehadirans->where('status', 'Belum Absen')->count(),
+            'Sakit' => $kehadirans->where('status', 'Sakit')->count(),
+            'Izin' => $kehadirans->where('status', 'Izin')->count(),
+            'Dinas Resmi' => $kehadirans->whereIn('status', ['Dinas Dalam', 'Dinas Sore', 'Dinas Luar', 'Dinas Khusus'])->count(),
+            'Pelayanan Teknis' => $kehadirans->where('status', 'Pelayanan Teknis')->count(),
+            'Cuti' => $kehadirans->whereIn('status', ['Cuti Tahunan', 'Cuti Bersalin'])->count(),
+            'Lepas Tugas' => $kehadirans->whereIn('status', ['Lepas Libur', 'Lepas Piket', 'Lepas Jaga'])->count(),
+            'Lainnya' => $kehadirans->whereIn('status', ['BP', 'Izin Tidak Apel', 'Terlambat', 'Pendidikan'])->count(),
         ];
 
-        // Peta warna premium
         $colorMap = [
             'Hadir' => '#10b981',
             'Belum Diabsen' => '#f59e0b',
@@ -106,14 +94,14 @@ class KekuatanApelChart extends ChartWidget
 
         foreach ($dataMap as $label => $val) {
             if ($val > 0) {
-                $labels[] = "{$label}: {$val} Orang";
+                $labels[] = "{$label}: {$val}";
                 $values[] = $val;
                 $backgroundColors[] = $colorMap[$label];
             }
         }
 
         if (empty($values)) {
-            $labels[] = 'Tidak Ada Anggota (0 Orang)';
+            $labels[] = 'Tidak ada data';
             $values[] = 0;
             $backgroundColors[] = '#e2e8f0';
         }
@@ -123,7 +111,8 @@ class KekuatanApelChart extends ChartWidget
                 [
                     'data' => $values,
                     'backgroundColor' => $backgroundColors,
-                    'borderWidth' => 1,
+                    'borderWidth' => 0,
+                    'hoverOffset' => 8,
                 ]
             ],
             'labels' => $labels,
@@ -133,5 +122,21 @@ class KekuatanApelChart extends ChartWidget
     protected function getType(): string
     {
         return 'pie';
+    }
+
+    protected function getOptions(): array
+    {
+        return [
+            'plugins' => [
+                'legend' => [
+                    'position' => 'bottom',
+                    'labels' => [
+                        'padding' => 12,
+                        'usePointStyle' => true,
+                        'pointStyle' => 'circle',
+                    ],
+                ],
+            ],
+        ];
     }
 }
