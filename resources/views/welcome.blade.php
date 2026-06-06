@@ -3,163 +3,333 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Apel - Sistem Informasi Kehadiran & Kekuatan Apel</title>
-    
-    <!-- Google Fonts: Roboto & Outfits for Material Design feel -->
+    <title>E-Apel - Sistem Kehadiran Digital</title>
+    <meta name="description" content="Sistem informasi kehadiran dan kekuatan apel digital untuk pencatatan presensi personel secara efisien.">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS (Minimal for layout utilities) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Outfit', 'Roboto', 'sans-serif'],
-                        roboto: ['Roboto', 'sans-serif'],
-                    },
-                    colors: {
-                        primary: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet">
 
     <style>
-        /* Material Design shadow levels */
-        .elevation-0 { box-shadow: none; }
-        .elevation-1 { box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12); }
-        .elevation-2 { box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12); }
-        .elevation-4 { box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12); }
-        .elevation-8 { box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12); }
-        
-        /* Smooth transitions */
-        .material-btn {
-            transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s;
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --md-primary: #1a73e8;
+            --md-on-primary: #ffffff;
+            --md-surface: #ffffff;
+            --md-on-surface: #1f1f1f;
+            --md-on-surface-variant: #5f6368;
+            --md-outline: #dadce0;
+            --md-surface-container: #f8f9fa;
+            --md-surface-container-high: #f1f3f4;
+        }
+
+        body {
+            font-family: 'Inter', 'Google Sans', 'Roboto', system-ui, sans-serif;
+            background: var(--md-surface);
+            color: var(--md-on-surface);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* NAV */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--md-outline);
+        }
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--md-on-surface);
+        }
+        .nav-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--md-primary);
+            color: var(--md-on-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+        }
+        .nav-title {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            background: var(--md-primary);
+            color: var(--md-on-primary);
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            font-family: inherit;
+            text-decoration: none;
+            cursor: pointer;
+            transition: box-shadow 0.2s ease, background 0.2s ease;
+        }
+        .nav-btn:hover {
+            background: #1765cc;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        /* HERO */
+        .hero {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 48px 24px;
+        }
+        .hero-inner {
+            max-width: 560px;
+            text-align: center;
+        }
+        .hero-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: var(--md-surface-container-high);
+            border: 1px solid var(--md-outline);
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--md-on-surface-variant);
+            margin-bottom: 24px;
+        }
+        .hero-chip .material-symbols-outlined {
+            font-size: 16px;
+            color: var(--md-primary);
+        }
+        .hero h1 {
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.15;
+            color: var(--md-on-surface);
+            margin-bottom: 16px;
+        }
+        .hero h1 span {
+            color: var(--md-primary);
+        }
+        .hero p {
+            font-size: 16px;
+            color: var(--md-on-surface-variant);
+            line-height: 1.6;
+            max-width: 460px;
+            margin: 0 auto 32px auto;
+        }
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: var(--md-primary);
+            color: var(--md-on-primary);
+            border-radius: 24px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: box-shadow 0.2s ease, background 0.2s ease, transform 0.15s ease;
+        }
+        .hero-cta:hover {
+            background: #1765cc;
+            box-shadow: 0 2px 6px rgba(26,115,232,0.3);
+            transform: translateY(-1px);
+        }
+        .hero-cta .material-symbols-outlined {
+            font-size: 20px;
+            transition: transform 0.2s ease;
+        }
+        .hero-cta:hover .material-symbols-outlined {
+            transform: translateX(3px);
+        }
+
+        /* FEATURES */
+        .features {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            padding: 0 24px 48px 24px;
+            flex-wrap: wrap;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .feature-card {
+            flex: 1;
+            min-width: 200px;
+            max-width: 240px;
+            padding: 20px;
+            border: 1px solid var(--md-outline);
+            border-radius: 16px;
+            text-align: center;
+            transition: box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+        .feature-card:hover {
+            border-color: transparent;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px auto;
+        }
+        .feature-icon .material-symbols-outlined {
+            font-size: 22px;
+        }
+        .feature-icon.green  { background: #e6f4ea; color: #1e8e3e; }
+        .feature-icon.blue   { background: #e8f0fe; color: #1a73e8; }
+        .feature-icon.purple { background: #f3e8fd; color: #8430ce; }
+        .feature-card h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--md-on-surface);
+        }
+        .feature-card p {
+            font-size: 12px;
+            color: var(--md-on-surface-variant);
+            line-height: 1.5;
+        }
+
+        /* INFO */
+        .info-bar {
+            max-width: 560px;
+            margin: 0 auto 40px auto;
+            padding: 14px 20px;
+            background: var(--md-surface-container);
+            border-radius: 12px;
+            border: 1px solid var(--md-outline);
+            display: flex;
+            gap: 24px;
+            font-size: 12px;
+            color: var(--md-on-surface-variant);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .info-item .material-symbols-outlined {
+            font-size: 16px;
+            color: var(--md-primary);
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 20px 24px;
+            border-top: 1px solid var(--md-outline);
+            text-align: center;
+            font-size: 12px;
+            color: var(--md-on-surface-variant);
+        }
+
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 28px; }
+            .hero p { font-size: 14px; }
+            .features { flex-direction: column; align-items: center; }
+            .feature-card { max-width: 100%; }
+            .info-bar { flex-direction: column; gap: 8px; }
+            nav { padding: 12px 16px; }
         }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen flex flex-col justify-between font-sans text-gray-800 antialiased selection:bg-primary-100">
+<body>
 
-    <!-- Header / Navbar -->
-    <header class="w-full bg-white border-b border-gray-100">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-primary-600 flex items-center justify-center text-white font-bold text-xl shadow-md shadow-primary-500/20">
-                    E
-                </div>
-                <div>
-                    <h1 class="text-lg font-extrabold tracking-tight text-gray-900 leading-none">E-Apel</h1>
-                    <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Digital Absensi</span>
-                </div>
+    <nav>
+        <a href="/" class="nav-brand">
+            <div class="nav-icon">E</div>
+            <span class="nav-title">E-Apel</span>
+        </a>
+        <a href="/admin" class="nav-btn">
+            <span class="material-symbols-outlined" style="font-size:18px">login</span>
+            Masuk
+        </a>
+    </nav>
+
+    <main class="hero">
+        <div class="hero-inner">
+            <div class="hero-chip">
+                <span class="material-symbols-outlined">apartment</span>
+                {{ $setting->nama_instansi ?? 'Sistem Kehadiran Digital' }}
             </div>
-            
-            <a href="/admin" class="material-btn elevation-1 hover:elevation-2 bg-primary-600 hover:bg-primary-700 text-white font-semibold text-sm px-5 py-2 rounded-lg inline-flex items-center">
-                Portal Admin
-                <svg class="w-4 h-4 ml-1.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-                </svg>
-            </a>
-        </div>
-    </header>
 
-    <!-- Main Hero -->
-    <main class="flex-grow flex items-center justify-center px-6 py-12">
-        <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
-            
-            <!-- Hero Left: Text & Info -->
-            <div class="md:col-span-7 space-y-6 text-center md:text-left">
-                <!-- Badge Instansi -->
-                <div class="inline-flex items-center px-3 py-1.5 rounded-full bg-primary-50 border border-primary-100 text-primary-700 text-xs font-bold uppercase tracking-wider">
-                    <svg class="w-3.5 h-3.5 mr-1.5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.683 0-5.302.235-7.848.682V21M3 21h18M12 6.75h.008v.008H12V6.75z" />
-                    </svg>
-                    {{ $setting->nama_instansi ?? 'Sistem Informasi E-Apel' }}
-                </div>
+            <h1>Kehadiran <span>Digital</span> yang Simpel & Efisien</h1>
 
-                <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 leading-tight">
-                    Sistem Rekapitulasi <span class="text-primary-600">Kehadiran & Kekuatan</span> Apel Digital
-                </h2>
+            <p>Pencatatan presensi apel personel secara real-time dengan fitur OCR kamera, rekap otomatis, dan cetak laporan PDF.</p>
 
-                <p class="text-gray-500 text-base max-w-lg mx-auto md:mx-0 font-light leading-relaxed">
-                    Sistem modern dan minimalis untuk memantau kehadiran apel personel secara real-time. Dilengkapi fitur pemindaian surat izin berbasis AI OCR kamera, ekspor PDF standar fisik, dan dasbor analitik.
-                </p>
-
-                <!-- Instansi Info -->
-                @if($setting)
-                <div class="p-4 bg-white rounded-xl border border-gray-100 elevation-1 space-y-2 max-w-lg text-xs text-gray-500">
-                    <div class="flex items-start space-x-2">
-                        <span class="font-bold text-gray-700 min-w-[70px]">Alamat:</span>
-                        <span>{{ $setting->alamat ?? '-' }}</span>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <span class="font-bold text-gray-700 min-w-[70px]">Kontak:</span>
-                        <span>{{ $setting->kontak_person ?? '-' }}</span>
-                    </div>
+            @if($setting && ($setting->alamat || $setting->kontak_person))
+            <div class="info-bar">
+                @if($setting->alamat)
+                <div class="info-item">
+                    <span class="material-symbols-outlined">location_on</span>
+                    {{ $setting->alamat }}
                 </div>
                 @endif
-
-                <div class="pt-2 flex flex-wrap justify-center md:justify-start gap-4">
-                    <a href="/admin" class="material-btn elevation-2 hover:elevation-4 bg-primary-600 hover:bg-primary-700 text-white font-bold px-8 py-3.5 rounded-xl text-base inline-flex items-center">
-                        Masuk Ke Portal E-Apel
-                        <svg class="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                        </svg>
-                    </a>
+                @if($setting->kontak_person)
+                <div class="info-item">
+                    <span class="material-symbols-outlined">call</span>
+                    {{ $setting->kontak_person }}
                 </div>
+                @endif
             </div>
+            @endif
 
-            <!-- Hero Right: Material Card Grid -->
-            <div class="md:col-span-5 grid grid-cols-1 gap-4">
-                <!-- Card 1 -->
-                <div class="p-6 bg-white rounded-2xl border border-gray-100 elevation-1 hover:elevation-2 transition-all">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-sm font-bold text-gray-900 mb-1">Presensi Sekali Klik</h3>
-                    <p class="text-xs text-gray-400">Pencatatan status kehadiran praktis dan cepat langsung dari baris tabel absensi tanpa navigasi rumit.</p>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="p-6 bg-white rounded-2xl border border-gray-100 elevation-1 hover:elevation-2 transition-all">
-                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-sm font-bold text-gray-900 mb-1">Scan Surat Izin Kamera</h3>
-                    <p class="text-xs text-gray-400">Pindai fisik surat keterangan sakit/izin menggunakan kamera browser untuk ekstraksi teks OCR instan.</p>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="p-6 bg-white rounded-2xl border border-gray-100 elevation-1 hover:elevation-2 transition-all">
-                    <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-sm font-bold text-gray-900 mb-1">Dasbor & Cetak Laporan PDF</h3>
-                    <p class="text-xs text-gray-400">Pie Chart ringkasan kekuatan terbaru dan cetak PDF resmi format fisik menggunakan LibreOffice server.</p>
-                </div>
-            </div>
-
+            <a href="/admin" class="hero-cta">
+                Buka Portal E-Apel
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </a>
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="w-full bg-white border-t border-gray-100 py-6 text-center text-xs text-gray-400">
-        <p>&copy; {{ date('Y') }} {{ $setting->nama_instansi ?? 'E-Apel' }}. Hak Cipta Dilindungi Undang-Undang.</p>
+    <section class="features">
+        <div class="feature-card">
+            <div class="feature-icon green">
+                <span class="material-symbols-outlined">check_circle</span>
+            </div>
+            <h3>Presensi Sekali Klik</h3>
+            <p>Pencatatan status kehadiran cepat langsung dari tabel absensi.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon blue">
+                <span class="material-symbols-outlined">document_scanner</span>
+            </div>
+            <h3>Scan Surat via Kamera</h3>
+            <p>Pindai surat izin/sakit dengan OCR kamera untuk ekstraksi teks otomatis.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon purple">
+                <span class="material-symbols-outlined">picture_as_pdf</span>
+            </div>
+            <h3>Cetak Laporan PDF</h3>
+            <p>Ekspor rekap kekuatan apel menjadi dokumen PDF format resmi.</p>
+        </div>
+    </section>
+
+    <footer>
+        &copy; {{ date('Y') }} {{ $setting->nama_instansi ?? 'E-Apel' }}. Hak Cipta Dilindungi.
     </footer>
 
 </body>
