@@ -16,6 +16,7 @@ class Anggota extends Model
         'foto',
         'bagian_id',
         'kategori_pegawai',
+        'jabatan',
     ];
 
     public function bagian(): BelongsTo

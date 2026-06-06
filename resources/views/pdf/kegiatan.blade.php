@@ -222,7 +222,7 @@
                     <tr>
                         <th style="width: 5%;">No</th>
                         <th style="width: 25%;">Nama Personel</th>
-                        <th style="width: 20%;">Unit Kerja</th>
+                        <th style="width: 20%;">Pangkat / Korps / Gol</th>
                         <th style="width: 15%;" class="text-center">Kategori</th>
                         <th style="width: 15%;">Sub Status</th>
                         <th style="width: 20%;">Keterangan / Catatan</th>
@@ -233,7 +233,7 @@
                         <tr>
                             <td class="text-center">{{ $index + 1 }}</td>
                             <td><strong>{{ $record->anggota->nama }}</strong></td>
-                            <td>{{ $record->anggota->bagian->nama_bagian }}</td>
+                            <td>{{ $record->anggota->jabatan ?? '-' }}</td>
                             <td class="text-center">{{ $record->anggota->kategori_pegawai }}</td>
                             <td>{{ $record->sub_status ?? '-' }}</td>
                             <td>{{ $record->keterangan ?? '-' }}</td>

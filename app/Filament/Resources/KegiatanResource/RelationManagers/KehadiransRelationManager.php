@@ -84,8 +84,9 @@ class KehadiransRelationManager extends RelationManager
                     ->label('Nama Personel')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('anggota.bagian.nama_bagian')
-                    ->label('Bagian / Unit Kerja')
+                Tables\Columns\TextColumn::make('anggota.jabatan')
+                    ->label('Pangkat / Korps / Gol')
+                    ->placeholder('-')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('anggota.kategori_pegawai')
                     ->label('Kategori')

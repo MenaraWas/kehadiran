@@ -50,6 +50,10 @@ class AnggotaResource extends Resource
                                 'BLU' => 'BLU',
                             ])
                             ->required(),
+                        Forms\Components\TextInput::make('jabatan')
+                            ->label('Pangkat / Korps / Gol')
+                            ->placeholder('Cth: Letkol Ckm (K), Penata Tk.I III/d, PPPK Gol. V')
+                            ->maxLength(255),
                         Forms\Components\FileUpload::make('foto')
                             ->label('Foto Anggota')
                             ->image()
@@ -74,8 +78,13 @@ class AnggotaResource extends Resource
                     ->label('Nama Lengkap')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('jabatan')
+                    ->label('Pangkat / Korps / Gol')
+                    ->placeholder('-')
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('bagian.nama_bagian')
-                    ->label('Bagian / Unit Kerja')
+                    ->label('Bagian')
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('kategori_pegawai')
