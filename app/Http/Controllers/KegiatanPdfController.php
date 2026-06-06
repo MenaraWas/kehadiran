@@ -57,7 +57,7 @@ class KegiatanPdfController extends Controller
         // Eksekusi LibreOffice headless
         $command = "libreoffice --headless --convert-to pdf --outdir " . escapeshellarg($tempDir) . " " . escapeshellarg($htmlFile);
         
-        exec($command, $output, $returnVar);
+        \exec($command, $output, $returnVar);
 
         if ($returnVar === 0 && File::exists($pdfFile)) {
             $filename = 'Laporan_Kekuatan_Apel_' . str_replace(' ', '_', $kegiatan->nama_kegiatan) . '_' . $kegiatan->tanggal->format('Y-m-d') . '.pdf';
