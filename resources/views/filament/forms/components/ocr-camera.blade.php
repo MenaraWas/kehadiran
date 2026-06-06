@@ -349,13 +349,42 @@
 
                 if (this.$wire) {
                     try {
+                        // Filament v3 uses mountedTableActionsData (plural, array)
                         if (matchedStatus) {
-                            this.$wire.set('mountedTableActionData.status', matchedStatus);
+                            this.$wire.set('mountedTableActionsData.0.status', matchedStatus);
                         }
-                        this.$wire.set('mountedTableActionData.keterangan', keteranganValue);
+                        this.$wire.set('mountedTableActionsData.0.keterangan', keteranganValue);
                     } catch (e) {
-                        console.warn('Wire set failed:', e);
+                        console.warn('Wire set failed, trying DOM fallback:', e);
+                        // DOM fallback: find and update inputs directly
+                        this.fillFormViaDom(matchedStatus, keteranganValue);
                     }
+                }
+            },
+
+            fillFormViaDom(status, keterangan) {
+                try {
+                    // Find the modal container
+                    const modal = this.$el.closest('.fi-modal') || document.querySelector('.fi-modal');
+                    if (!modal) return;
+
+                    // Fill keterangan input
+                    const keteranganInput = modal.querySelector('input[wire\\:model*="keterangan"], input[id*="keterangan"]');
+                    if (keteranganInput) {
+                        keteranganInput.value = keterangan;
+                        keteranganInput.dispatchEvent(new Event('input', { bubbles: true }));
+                    }
+
+                    // Fill status select via Livewire
+                    if (status) {
+                        const statusSelect = modal.querySelector('select[wire\\:model*="status"]');
+                        if (statusSelect) {
+                            statusSelect.value = status;
+                            statusSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                        }
+                    }
+                } catch (e) {
+                    console.warn('DOM fallback failed:', e);
                 }
             },
 
