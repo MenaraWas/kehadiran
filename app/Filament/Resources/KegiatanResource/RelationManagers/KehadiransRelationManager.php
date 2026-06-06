@@ -175,7 +175,7 @@ class KehadiransRelationManager extends RelationManager
                         ]);
                         $livewire->dispatch('refreshKekuatanApel');
                     })
-                    ->visible(fn ($record) => $record->status !== 'Hadir'),
+                    ->visible(fn ($record) => $record->status === 'Belum Absen'),
                 
                 Tables\Actions\Action::make('setTidakHadir')
                     ->label('Tidak Hadir')
