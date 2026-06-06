@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,9 +14,9 @@ class DatabaseSeeder extends Seeder
     {
         // 0. Buat Pengaturan Website Bawaan
         \App\Models\Setting::create([
-            'nama_instansi' => 'MAN 2 Bantul',
-            'alamat' => 'Jl. Parangtritis No.KM. 11, Manding, Trirenggo, Kec. Bantul, Kabupaten Bantul, Daerah Istimewa Yogyakarta 55714',
-            'kontak_person' => '081234567890 (Humas & Tata Usaha)',
+            'nama_instansi' => 'RSPAD Gatot Soebroto',
+            'alamat' => 'Jl. Abdul Rahman Saleh No.24, Senen, Jakarta Pusat',
+            'kontak_person' => '021-3441008',
         ]);
 
         // 1. Buat User Admin Bawaan
@@ -27,70 +26,63 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
         ]);
 
-        // 2. Buat Data Bagian / Unit Kerja
-        $bagianTU = \App\Models\Bagian::create(['nama_bagian' => 'Tata Usaha']);
-        $bagianKurikulum = \App\Models\Bagian::create(['nama_bagian' => 'Kurikulum']);
-        $bagianKesiswaan = \App\Models\Bagian::create(['nama_bagian' => 'Kesiswaan']);
-        $bagianSarpras = \App\Models\Bagian::create(['nama_bagian' => 'Sarana & Prasarana']);
-        $bagianHumas = \App\Models\Bagian::create(['nama_bagian' => 'Humas & Keagamaan']);
-
-        // 3. Buat Data Anggota / Personel Contoh
+        // 2. Buat Data Anggota Personel Contoh
         $fotoPath = 'anggota-fotos/placeholder.png';
 
-        // Tata Usaha
+        // Militer / TNI
         \App\Models\Anggota::create([
-            'nama' => 'Supriyadi, S.Sos',
+            'nama' => 'dr. Ford Ance E Aritonang, Sp.JP, FIHA.',
             'foto' => $fotoPath,
-            'bagian_id' => $bagianTU->id,
-            'kategori_pegawai' => 'PNS',
+            'kategori_pegawai' => 'TNI',
+            'jabatan' => 'Letkol Ckm (K)',
         ]);
         \App\Models\Anggota::create([
-            'nama' => 'Sri Wahyuni, A.Md',
+            'nama' => 'Dian Endah Pamurtiani, A.Md.Keb',
             'foto' => $fotoPath,
-            'bagian_id' => $bagianTU->id,
-            'kategori_pegawai' => 'PPPK',
-        ]);
-
-        // Kurikulum
-        \App\Models\Anggota::create([
-            'nama' => 'Bambang Triyono, S.Pd., M.Pd',
-            'foto' => $fotoPath,
-            'bagian_id' => $bagianKurikulum->id,
-            'kategori_pegawai' => 'PNS',
-        ]);
-        \App\Models\Anggota::create([
-            'nama' => 'Dewi Lestari, S.Pd',
-            'foto' => $fotoPath,
-            'bagian_id' => $bagianKurikulum->id,
-            'kategori_pegawai' => 'PPPK',
+            'kategori_pegawai' => 'TNI',
+            'jabatan' => 'Letda Ckm (K)',
         ]);
 
-        // Kesiswaan
+        // PNS
         \App\Models\Anggota::create([
-            'nama' => 'Ahmad Fauzi, S.Ag., M.Pd.I',
+            'nama' => 'Eny Nurfriyanti, AMK',
             'foto' => $fotoPath,
-            'bagian_id' => $bagianKesiswaan->id,
             'kategori_pegawai' => 'PNS',
+            'jabatan' => 'Penata Tk.I III/d',
         ]);
         \App\Models\Anggota::create([
-            'nama' => 'Rian Kurniawan, S.Pd',
+            'nama' => 'Ns. Umi Duwi Amanah, S.Kep',
             'foto' => $fotoPath,
-            'bagian_id' => $bagianKesiswaan->id,
-            'kategori_pegawai' => 'PPPK',
+            'kategori_pegawai' => 'PNS',
+            'jabatan' => 'Penata III/c',
         ]);
 
-        // Sarana & Prasarana
+        // PPPK
         \App\Models\Anggota::create([
-            'nama' => 'Rahmat Hidayat, S.T',
+            'nama' => 'Ns. Fajar Adhie Sulistyo, S.Kep',
             'foto' => $fotoPath,
-            'bagian_id' => $bagianSarpras->id,
-            'kategori_pegawai' => 'PNS',
+            'kategori_pegawai' => 'PPPK',
+            'jabatan' => 'PPPK Gol. X',
         ]);
         \App\Models\Anggota::create([
-            'nama' => 'Siti Aminah',
+            'nama' => 'Bresna Mayanti, S.K.M.',
             'foto' => $fotoPath,
-            'bagian_id' => $bagianSarpras->id,
+            'kategori_pegawai' => 'PPPK',
+            'jabatan' => 'PPPK Gol. IX',
+        ]);
+
+        // BLU
+        \App\Models\Anggota::create([
+            'nama' => 'Rosi Agus Setiawan, S.E.',
+            'foto' => $fotoPath,
             'kategori_pegawai' => 'BLU',
+            'jabatan' => 'Pegawai BLU Non ASN',
+        ]);
+        \App\Models\Anggota::create([
+            'nama' => 'Elsa Maghfira Paramesti, S.I.kom',
+            'foto' => $fotoPath,
+            'kategori_pegawai' => 'BLU',
+            'jabatan' => 'Pegawai BLU Non ASN',
         ]);
     }
 }

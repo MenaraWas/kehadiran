@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\AnggotaResource\Pages;
-use App\Filament\Resources\AnggotaResource\RelationManagers;
 use App\Models\Anggota;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -35,12 +34,6 @@ class AnggotaResource extends Resource
                             ->label('Nama Lengkap')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\Select::make('bagian_id')
-                            ->label('Bagian / Unit Kerja')
-                            ->relationship('bagian', 'nama_bagian')
-                            ->searchable()
-                            ->preload()
-                            ->required(),
                         Forms\Components\Select::make('kategori_pegawai')
                             ->label('Kategori Pegawai')
                             ->options([
@@ -83,10 +76,6 @@ class AnggotaResource extends Resource
                     ->placeholder('-')
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('bagian.nama_bagian')
-                    ->label('Bagian')
-                    ->sortable()
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('kategori_pegawai')
                     ->label('Kategori')
                     ->badge()
@@ -105,11 +94,6 @@ class AnggotaResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('bagian_id')
-                    ->label('Bagian / Unit Kerja')
-                    ->relationship('bagian', 'nama_bagian')
-                    ->searchable()
-                    ->preload(),
                 Tables\Filters\SelectFilter::make('kategori_pegawai')
                     ->label('Kategori Pegawai')
                     ->options([

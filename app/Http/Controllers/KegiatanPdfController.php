@@ -10,7 +10,7 @@ class KegiatanPdfController extends Controller
     public function generate(Kegiatan $kegiatan)
     {
         // Load data relasi yang diperlukan
-        $kegiatan->load(['kehadirans.anggota.bagian', 'bagian']);
+        $kegiatan->load(['kehadirans.anggota']);
 
         $kehadirans = $kegiatan->kehadirans;
         $total = $kehadirans->count();

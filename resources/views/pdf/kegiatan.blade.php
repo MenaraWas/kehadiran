@@ -153,10 +153,10 @@
             <td class="meta-value">: {{ $kegiatan->tanggal->format('d F Y') }}</td>
         </tr>
         <tr>
-            <td class="meta-label">Unit Kerja</td>
-            <td class="meta-value">: {{ $kegiatan->bagian ? $kegiatan->bagian->nama_bagian : 'Semua Bagian / Lintas Unit' }}</td>
             <td class="meta-label">Waktu Mulai</td>
             <td class="meta-value">: {{ $kegiatan->waktu ? \Carbon\Carbon::createFromFormat('H:i:s', $kegiatan->waktu)->format('H:i') . ' WIB' : '-' }}</td>
+            <td></td>
+            <td></td>
         </tr>
         @if($kegiatan->keterangan)
         <tr>

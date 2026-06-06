@@ -2,7 +2,6 @@
 
 namespace App\Filament\Pages;
 
-use App\Models\Bagian;
 use App\Models\Anggota;
 use App\Models\Kehadiran;
 use Filament\Pages\Page;
@@ -33,7 +32,6 @@ class RekapBulanan extends Page implements HasForms
         $this->form->fill([
             'month' => now()->month,
             'year' => now()->year,
-            'bagian_id' => null,
             'kategori_pegawai' => null,
         ]);
     }
@@ -42,7 +40,7 @@ class RekapBulanan extends Page implements HasForms
     {
         return $form
             ->schema([
-                Grid::make(4)
+                Grid::make(3)
                     ->schema([
                         Select::make('month')
                             ->label('Bulan')
@@ -71,12 +69,6 @@ class RekapBulanan extends Page implements HasForms
                             )
                             ->required()
                             ->reactive(),
-                        Select::make('bagian_id')
-                            ->label('Bagian / Unit Kerja')
-                            ->options(Bagian::pluck('nama_bagian', 'id')->toArray())
-                            ->placeholder('Semua Bagian')
-                            ->nullable()
-                            ->reactive(),
                         Select::make('kategori_pegawai')
                             ->label('Kategori Pegawai')
                             ->options([
@@ -98,19 +90,14 @@ class RekapBulanan extends Page implements HasForms
         $filters = $this->data;
         $month = $filters['month'] ?? now()->month;
         $year = $filters['year'] ?? now()->year;
-        $bagianId = $filters['bagian_id'] ?? null;
         $kategori = $filters['kategori_pegawai'] ?? null;
 
-        $anggotaQuery = Anggota::with(['bagian', 'kehadirans' => function ($q) use ($month, $year) {
+        $anggotaQuery = Anggota::with(['kehadirans' => function ($q) use ($month, $year) {
             $q->whereHas('kegiatan', function ($kq) use ($month, $year) {
                 $kq->whereMonth('tanggal', $month)
                   ->whereYear('tanggal', $year);
             });
         }]);
-
-        if ($bagianId) {
-            $anggotaQuery->where('bagian_id', $bagianId);
-        }
 
         if ($kategori) {
             $anggotaQuery->where('kategori_pegawai', $kategori);
@@ -126,11 +113,11 @@ class RekapBulanan extends Page implements HasForms
             $counts = [
                 'Hadir' => 0,
                 'Belum Absen' => 0,
-                'Dinas' => 0,     // Dinas Dalam (DD), Dinas Sore (DS), Dinas Luar (DL), Dinas Khusus (DK)
-                'Pelayanan' => 0, // Pelayanan Teknis
-                'Izin' => 0,      // Sakit, Izin, BP, Izin Tidak Apel, Terlambat, Pendidikan
-                'Cuti' => 0,      // Cuti Tahunan, Cuti Bersalin
-                'Lepas' => 0,     // Lepas Libur (LL), Lepas Piket, Lepas Jaga
+                'Dinas' => 0,
+                'Pelayanan' => 0,
+                'Izin' => 0,
+                'Cuti' => 0,
+                'Lepas' => 0,
                 'Total' => $kehadirans->count(),
             ];
 
@@ -155,7 +142,7 @@ class RekapBulanan extends Page implements HasForms
 
             $rekap[] = [
                 'nama' => $anggota->nama,
-                'bagian' => $anggota->bagian->nama_bagian,
+                'jabatan' => $anggota->jabatan ?? '-',
                 'kategori' => $anggota->kategori_pegawai,
                 'counts' => $counts,
             ];

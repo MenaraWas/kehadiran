@@ -29,7 +29,7 @@
                     <thead>
                         <tr class="bg-gray-50 dark:bg-white/5 border-b border-gray-200 dark:border-white/10 text-xs font-semibold text-gray-500 uppercase dark:text-gray-400">
                             <th class="px-4 py-3">Nama Anggota</th>
-                            <th class="px-4 py-3">Unit Kerja</th>
+                            <th class="px-4 py-3">Jabatan</th>
                             <th class="px-4 py-3 text-center">Kat.</th>
                             <th class="px-4 py-3 text-center">Hadir</th>
                             <th class="px-4 py-3 text-center">Belum Absen</th>
@@ -48,7 +48,7 @@
                         @forelse ($rekapData as $row)
                             <tr class="hover:bg-gray-50/50 dark:hover:bg-white/5">
                                 <td class="px-4 py-3 font-semibold text-gray-900 dark:text-white">{{ $row['nama'] }}</td>
-                                <td class="px-4 py-3">{{ $row['bagian'] }}</td>
+                                <td class="px-4 py-3">{{ $row['jabatan'] }}</td>
                                 <td class="px-4 py-3 text-center">
                                     <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold
                                         {{ $row['kategori'] === 'TNI' ? 'bg-danger-50 text-danger-700 dark:bg-danger-900/30 dark:text-danger-400' : '' }}

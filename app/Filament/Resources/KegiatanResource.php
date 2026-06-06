@@ -33,20 +33,13 @@ class KegiatanResource extends Resource
                 Forms\Components\Section::make('Detail Informasi Kegiatan')
                     ->description('Detail informasi tentang nama, tanggal, waktu, dan keterangan kegiatan.')
                     ->collapsible()
-                    ->collapsed(fn (string $context): bool => $context === 'edit') // Collapsed hanya saat edit
+                    ->collapsed(fn (string $context): bool => $context === 'edit')
                     ->schema([
                         Forms\Components\TextInput::make('nama_kegiatan')
                             ->label('Nama Kegiatan / Apel')
                             ->default('Apel Pagi')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\Select::make('bagian_id')
-                            ->label('Bagian / Unit Kerja')
-                            ->relationship('bagian', 'nama_bagian')
-                            ->searchable()
-                            ->preload()
-                            ->nullable()
-                            ->helperText('Kosongkan jika kegiatan ini diikuti oleh semua bagian.'),
                         Forms\Components\DatePicker::make('tanggal')
                             ->label('Tanggal Kegiatan')
                             ->default(now())
@@ -72,12 +65,6 @@ class KegiatanResource extends Resource
                     ->label('Nama Kegiatan')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('bagian.nama_bagian')
-                    ->label('Bagian / Unit Kerja')
-                    ->placeholder('Semua Bagian')
-                    ->badge()
-                    ->color(fn ($state) => $state ? 'info' : 'success')
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('tanggal')
                     ->label('Tanggal')
                     ->date('d M Y')
@@ -94,11 +81,7 @@ class KegiatanResource extends Resource
                     ->alignCenter(),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('bagian_id')
-                    ->label('Bagian / Unit Kerja')
-                    ->relationship('bagian', 'nama_bagian')
-                    ->searchable()
-                    ->preload(),
+                //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

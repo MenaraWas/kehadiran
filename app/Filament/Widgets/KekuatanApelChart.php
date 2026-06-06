@@ -2,7 +2,6 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Bagian;
 use App\Models\Kegiatan;
 use Filament\Widgets\ChartWidget;
 
@@ -28,8 +27,12 @@ class KekuatanApelChart extends ChartWidget
     protected function getFilters(): ?array
     {
         return [
-            'all' => 'Semua Bagian / Unit Kerja',
-        ] + Bagian::pluck('nama_bagian', 'id')->toArray();
+            'all' => 'Semua Kategori',
+            'TNI' => 'TNI',
+            'PNS' => 'PNS',
+            'PPPK' => 'PPPK',
+            'BLU' => 'BLU',
+        ];
     }
 
     protected function getData(): array
@@ -54,7 +57,7 @@ class KekuatanApelChart extends ChartWidget
 
         $query = $latestKegiatan->kehadirans();
         if ($activeFilter && $activeFilter !== 'all') {
-            $query->whereHas('anggota', fn ($q) => $q->where('bagian_id', $activeFilter));
+            $query->whereHas('anggota', fn ($q) => $q->where('kategori_pegawai', $activeFilter));
         }
 
         $kehadirans = $query->get();
@@ -86,22 +89,21 @@ class KekuatanApelChart extends ChartWidget
 
         // Peta warna premium
         $colorMap = [
-            'Hadir' => '#10b981',        // Emerald Green
-            'Belum Diabsen' => '#f59e0b',  // Amber Orange
-            'Sakit' => '#ef4444',        // Red
-            'Izin' => '#3b82f6',        // Blue
-            'Dinas Resmi' => '#06b6d4',  // Cyan
-            'Pelayanan Teknis' => '#8b5cf6', // Violet
-            'Cuti' => '#ec4899',         // Pink
-            'Lepas Tugas' => '#64748b',  // Slate Gray
-            'Lainnya' => '#a8a29e',      // Stone
+            'Hadir' => '#10b981',
+            'Belum Diabsen' => '#f59e0b',
+            'Sakit' => '#ef4444',
+            'Izin' => '#3b82f6',
+            'Dinas Resmi' => '#06b6d4',
+            'Pelayanan Teknis' => '#8b5cf6',
+            'Cuti' => '#ec4899',
+            'Lepas Tugas' => '#64748b',
+            'Lainnya' => '#a8a29e',
         ];
 
         $labels = [];
         $values = [];
         $backgroundColors = [];
 
-        // Hanya tampilkan kategori yang jumlahnya > 0 di grafik lingkaran
         foreach ($dataMap as $label => $val) {
             if ($val > 0) {
                 $labels[] = "{$label}: {$val} Orang";
@@ -110,7 +112,6 @@ class KekuatanApelChart extends ChartWidget
             }
         }
 
-        // Jika semua bernilai 0
         if (empty($values)) {
             $labels[] = 'Tidak Ada Anggota (0 Orang)';
             $values[] = 0;
